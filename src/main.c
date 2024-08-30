@@ -17,6 +17,7 @@ int main()
 
     if (parse_command(input, &command))
     {
+        printf("execute command");
         execute_command(&command);
     }
     else
