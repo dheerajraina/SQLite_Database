@@ -59,6 +59,17 @@ int write_table_schema_to_file(TableSchema *schema)
                 col.is_primary_key ? "PRIMARY KEY" : "");
     }
 
+    fprintf(file, "\nIndexes:\n");
+    printf("Number of indexes %d", schema->index_count);
+    for (size_t i = 0; i < schema->index_count; i++)
+    {
+        Index index = schema->indexes[i];
+        fprintf(file, "Index: %s on column %s %s \n",
+                index.index_name,
+                index.column_name,
+                index.is_primary ? "PRIMARY_KEY" : "");
+    }
+
     fclose(file);
     return 0;
 }
