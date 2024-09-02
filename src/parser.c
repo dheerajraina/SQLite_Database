@@ -114,6 +114,18 @@ int parse_create_table(Lexer *lexer, SQLCommand *command)
         }
         // Add Column to the schema
 
+        if (is_primary_key)
+        {
+            printf("\n==============Entered is primary key\n");
+            Index primary_index;
+            primary_index.index_name = strdup("PRIMARY_KEY_INDEX");
+            primary_index.column_name = strdup(column_name);
+            primary_index.is_primary = 1;
+
+            schema->indexes = realloc(schema->indexes, sizeof(Index) * (schema->index_count + 1));
+            schema->indexes[schema->index_count++] = primary_index;
+        }
+
         Column *column = create_column(column_name, column_type, is_primary_key, is_not_null);
         schema->columns = realloc(schema->columns, sizeof(Column) * (schema->column_count + 1));
         schema->columns[schema->column_count++] = *column;
